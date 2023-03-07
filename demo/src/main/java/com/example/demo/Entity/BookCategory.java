@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.Entity;
 
 public enum BookCategory {
     BIOGRAPHY("Biography"),
