@@ -7,8 +7,8 @@ import jakarta.persistence.*;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "book_id")
+    private Long book_id;
 
 
     @Column(name = "title")
@@ -26,7 +26,23 @@ public class Book {
 
     @Column(name = "image_url")
     private String imageUrl;
+    Integer noOfCopies;
 
+    public void borrowBook() {
+        this.noOfCopies--;
+    }
+
+    public void returnBook() {
+        this.noOfCopies++;
+    }
+
+    public Integer getNoOfCopies() {
+        return noOfCopies;
+    }
+
+    public void setNoOfCopies(Integer noOfCopies) {
+        this.noOfCopies = noOfCopies;
+    }
 
     // getters and setters
 
@@ -38,12 +54,12 @@ public class Book {
         this.imageUrl = url;
     }
 
-    public Long getId() {
-        return id;
+    public Long getBook_id() {
+        return book_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setBook_id(Long id) {
+        this.book_id = id;
     }
 
     public String getTitle() {
