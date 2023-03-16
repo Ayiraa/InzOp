@@ -29,6 +29,7 @@ public class BorrowController {
     }
 
     @GetMapping
+    @CrossOrigin(origins = "*", maxAge = 3600)
     public List<Borrow> getAllBorrow() {
         return borrowRepository.findAll();
     }
@@ -70,6 +71,7 @@ public class BorrowController {
     }
 
     @GetMapping("user/{id}")
+    @CrossOrigin(origins = "*", maxAge = 3600)
     public List<Borrow> booksBorrowedByUser(@PathVariable Long id) {
         return borrowRepository.findByUserId(id);
     }
