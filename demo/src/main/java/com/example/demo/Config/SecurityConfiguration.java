@@ -1,9 +1,9 @@
 package com.example.demo.Config;
 
-import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,8 +27,13 @@ public class SecurityConfiguration {
                 .cors()
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**", "/books", "/users")
+                .requestMatchers("/auth/**", "/books", "/books/**")
                 .permitAll()
+                .requestMatchers(HttpMethod.GET, "/users", "/borrow", "/borrow/book/**").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/books", "/users/**").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/books").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/borrow").hasAnyAuthority("USER","ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/borrow").hasAnyAuthority("USER","ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
