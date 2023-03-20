@@ -1,79 +1,99 @@
 package com.example.demo.Entity;
-import jakarta.persistence.*;
 
-import java.sql.Timestamp;
+import com.example.demo.Token.Token;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
 import java.util.List;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long user_id;
 
-    @Column(name = "creation_Time")
-    private Timestamp creationTime;
+    @NotNull
+    @NotBlank
+    String firstname;
 
-    @Column(name = "username")
-    private String username;
+    @NotNull
+    @NotBlank
+    String lastname;
 
+
+    @NotNull
+    @NotBlank
+    @Email
+    String email;
+
+    @NotNull
+    @NotBlank
     private String password;
 
+    @Enumerated(EnumType.STRING)
     private RoleEnum role;
 
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
 
-    public User() {}
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
 
-    public User(Long user_id, Timestamp creationTime, String username, String password, RoleEnum role) {
-        this.user_id = user_id;
-        this.creationTime = creationTime;
-        this.username = username;
-        this.password = password;
-        this.role = role;
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
+    @NotNull
+    @Override
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    @Override
+    public String getUsername() {
+        return email;
     }
 
-    public RoleEnum getRole() {
-        return role;
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public void setRole(RoleEnum role) {
-        this.role = role;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    // getters and setters
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
     public Long getUser_id() {
         return user_id;
-    }
-
-    public void setUser_id(Long id) {
-        this.user_id = id;
-    }
-
-    public Timestamp getCreationTime() {
-        return creationTime;
-    }
-
-    public void setCreationTime(Timestamp creationTime) {
-        this.creationTime = creationTime;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 }
 
