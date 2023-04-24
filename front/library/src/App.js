@@ -1,12 +1,16 @@
-import logo from './logo.svg';
+
 import './App.css';
-import Login from './login/login';
+import { Route, Routes } from 'react-router-dom';
+import Login from './components/login/Login';
+import BookList from './components/Books/Allbooks/BookList';
+
 
 function App() {
   return (
-    <div className="App">
-      <Login/>
-    </div>
+    <Routes>
+      <Route path='/login' element={<Login/>}></Route>
+      <Route path='/books' element={<BookList/>}></Route>
+    </Routes>
   );
 }
 
