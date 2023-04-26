@@ -1,0 +1,39 @@
+.book-list-container {
+    margin: 20px;
+  }
+  
+  .book-list-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .book-list-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .book-list-table th,
+  .book-list-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .book-list-table th {
+    font-weight: bold;
+    background-color: #f8f8f8;
+  }
+  
+  .book-list-image {
+    width: 10px; /* Update the width to your desired size */
+    height: 10px;
+    object-fit: fill; /* Update the height to your desired size */
+    
+  }
+  
+  
+  .book-list-table td img {
+    width: 100%;
+    height: 100%;
+  }
+  

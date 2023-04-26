@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './BookList.css'; // Importing external CSS file for styling
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -13,9 +14,9 @@ const BookList = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Book List</h1>
-      <table>
+    <div className="book-list-container">
+      <h1 className="book-list-title">Book List</h1>
+      <table className="book-list-table">
         <thead>
           <tr>
             <th>Title</th>
@@ -33,8 +34,8 @@ const BookList = () => {
               <td>{book.author}</td>
               <td>{book.description}</td>
               <td>{book.genre}</td>
-              <td><img src={book.imageUrl} alt={book.title} /></td>
-              <td>{book.no_of_copies}</td>
+              <td  style={{ width: "150px" }}><img src={book.imageUrl} alt={book.title} className="book-list-image" /></td>
+              <td>{book.noOfCopies}</td>
             </tr>
           ))}
         </tbody>
