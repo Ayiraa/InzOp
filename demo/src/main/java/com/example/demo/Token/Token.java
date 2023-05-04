@@ -1,6 +1,7 @@
 package com.example.demo.Token;
 
 import com.example.demo.Entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import jakarta.persistence.Column;
@@ -14,6 +15,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -35,6 +37,7 @@ public class Token {
 
     public boolean expired;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     public User user;

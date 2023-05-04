@@ -19,7 +19,9 @@ public class UserController {
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
+        System.out.println("TEST");
         return userRepository.findAll();
+
     }
 
     @PostMapping("/users")
@@ -31,6 +33,7 @@ public class UserController {
     // Delete user by id
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+
         userRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
