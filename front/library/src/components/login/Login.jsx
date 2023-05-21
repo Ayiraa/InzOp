@@ -1,63 +1,61 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import PropTypes from 'prop-types';
+import './login.css';
 
 
-function Login() {
-  // Define state variables for email and password inputs
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  
-  // Define state variable for JWT token
-  const [token, setToken] = useState(null);
-  
-  // Define function to handle form submission
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    
-    // Send POST request to auth endpoint
-    const response = await fetch('http://localhost:8080/auth/login', {
-      method: 'POST',
-       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    });
-    console.log(response)
-    
-    // Check if response contains valid JSON data
-    const contentType = response.headers.get('content-type');
-    if (contentType && contentType.includes('application/json')) {
-      // Parse response as JSON
-      const data = await response.json();
-      
-      // Store JWT token in local storage
-      localStorage.setItem('token', data.token);
-      
-      // Set token state variable to trigger re-render
-      setToken(data.token);
-    } else {
-      // Handle non-JSON response
-      console.log('Error: Response does not contain valid JSON data');
-    }
-  };
-  
-  
-  // If token state variable is not null, user is logged in
-  if (token) {
-    return <p>You are logged in!</p>;
-  }
-  
-  // Otherwise, render login form
-  return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Email:
-        <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
-      </label>
-      <label>
-        Password:
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-      </label>
-      <button type="submit">Log In</button>
-    </form>
-  );
+
+async function loginUser(credentials) {
+  return fetch('http://localhost:8080/auth/login', {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(credentials)
+  })
+   .then(data => data.json());
 }
 
-export default Login;
+
+export default function Login({ setToken }) {
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const token = await loginUser({
+      email,
+      password
+    });
+    setToken(token);
+    window.localStorage.setItem('eml', email);
+    navigate("/profile");
+  }
+
+
+  return(
+    <div className="login-wrapper">
+      <h1>Please Log In</h1>
+      <form onSubmit={handleSubmit}>
+        <label>
+          <p>Adres email</p>
+          <input type="email" onChange={e => setEmail(e.target.value)} />
+        </label>
+        <label>
+          <p>Hasło</p>
+          <input type="password" onChange={e => setPassword(e.target.value)} />
+        </label>
+        <div className="login-submit">
+          <button type="submit">Zaloguj</button>
+        </div>
+      </form>
+    </div>
+  )
+
+}
+
+Login.propTypes = {
+  setToken: PropTypes.func.isRequired
+};
