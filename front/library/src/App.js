@@ -1,7 +1,7 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import Login from './components/login/Login';
-import BookList from './components/books/allbooks/booklist';
+import BookList from './components/books/allbooks/booklst'
 import Home from './components/home/home';
 import Profile from './components/profile/profile';
 import Borrows from './components/borrows/borrows';

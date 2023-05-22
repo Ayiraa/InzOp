@@ -54,6 +54,7 @@ public class BorrowController {
         overdueDate = c.getTime();
         borrow.setIssueDate(currentDate);
         borrow.setDueDate(overdueDate);
+        borrow.setUser_email(user.getEmail());
         borrowRepository.save(borrow);
         return user.getUsername() + " has borrowed one copy of \"" + book.getTitle() + "\"!";
     }
