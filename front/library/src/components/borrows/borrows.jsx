@@ -98,7 +98,7 @@ function retFullList() {
                         }
                     )}"
                 </h4>
-                <h5 className='borrow-data'> Id użytkownika: {borrow.userId} </h5>
+                <h5 className='borrow-data'> Email użytkownika: {borrow.user_email} </h5>
                 <h5 className='borrow-data'> Data wypożyczenia: {borrow.issueDate} </h5>
                 <h5 className='borrow-data'> Data oddania: {borrow.returnDate} </h5>
                 <h5 className='borrow-data'> Termin oddania: {borrow.dueDate} </h5>
@@ -119,7 +119,7 @@ function retFullList() {
          {Object.values(borrows).map( (borrow) => 
           {         
             
-          if( parseInt(searched) === (borrow.borrowId) ){ return (
+          if( parseInt(searched) === (borrow.borrowId) || searched === borrow.user_email ){ return (
             <div className='borrows' key={borrow.borrowId} id={borrow.borrowId} >
                 <h4 className='borrow-data'> Tytuł książki: "
                     {books.map( (book) =>
@@ -129,7 +129,7 @@ function retFullList() {
                         }
                     )}"
                 </h4>
-                <h5 className='borrow-data'> Id użytkownika: {borrow.userId} </h5>
+                <h5 className='borrow-data'> Email użytkownika: {borrow.user_email} </h5>
                 <h5 className='borrow-data'> Data wypożyczenia: {borrow.issueDate} </h5>
                 <h5 className='borrow-data'> Data oddania: {borrow.returnDate} </h5>
                 <h5 className='borrow-data'> Termin oddania: {borrow.dueDate} </h5>
@@ -153,7 +153,7 @@ function retFullList() {
         <div id="book-list-container">
     
           <form className="book-search-form">
-            <input type="text" className="book-search-text" onChange={e => setSearched(e.target.value) }></input>
+            <input type="text" className="book-search-text" placeholder="Wpisz email użytkownika" onChange={e => setSearched(e.target.value) }></input>
           </form>
     
           <h1 className="book-list-title">Lista książek</h1>
@@ -168,7 +168,7 @@ function retFullList() {
         <div className="book-list-container">
     
           <form className="book-search-form">
-            <input type="text" className="book-search-text" onChange={e => setSearched(e.target.value) }></input>
+            <input type="text" className="book-search-text" placeholder="Wpisz email użytkownika" onChange={e => setSearched(e.target.value) }></input>
           </form>
     
           <h1 className="book-list-title">Lista książek</h1>

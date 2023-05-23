@@ -136,7 +136,7 @@ function retFullList() {
         <div id="book-list-container">
     
           <form className="book-search-form">
-            <input type="text" className="book-search-text" onChange={e => setSearched(e.target.value) }></input>
+            <input type="text" className="book-search-text" placeholder="Wpisz email użytkownika" onChange={e => setSearched(e.target.value) }></input>
           </form>
     
           <h1 className="book-list-title">Lista użytkowników</h1>

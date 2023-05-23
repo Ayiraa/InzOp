@@ -247,7 +247,7 @@ const BookList = () => {
             {bookForm()}
       
             <form className="book-search-form">
-              <input type="text" className="book-search-text" onChange={e => setSearched(e.target.value) }></input>
+              <input type="text" className="book-search-text" placeholder="Wpisz tytuł książki"  onChange={e => setSearched(e.target.value) }></input>
             </form>
       
             <h1 className="book-list-title">Lista książek</h1>

@@ -13,6 +13,7 @@ public class Borrow {
     Long bookId;
     Long userId;
 
+    String user_email;
     @Temporal(TemporalType.TIMESTAMP)
     @JsonSerialize(using=JsonDateSerializer.class)
     Date issueDate;
@@ -25,13 +26,15 @@ public class Borrow {
     @JsonSerialize(using=JsonDateSerializer.class)
     Date dueDate;
 
-    public Borrow(Integer borrowId, Long bookId, Long userId, Date issueDate, Date returnDate, Date dueDate) {
+    public Borrow(Integer borrowId, Long bookId, String user_email, Long userId, Date issueDate, Date returnDate, Date dueDate) {
         this.borrowId = borrowId;
         this.bookId = bookId;
         this.userId = userId;
         this.issueDate = issueDate;
         this.returnDate = returnDate;
         this.dueDate = dueDate;
+        this.user_email=user_email;
+
     }
 
     public Borrow() {
@@ -83,5 +86,13 @@ public class Borrow {
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public String getUser_email() {
+        return user_email;
+    }
+
+    public void setUser_email(String user_email) {
+        this.user_email = user_email;
     }
 }
