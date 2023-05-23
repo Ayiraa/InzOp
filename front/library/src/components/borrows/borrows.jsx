@@ -8,7 +8,7 @@ const Borrows = () => {
     const { token } = useToken();
     const [borrows, setBorrows] = useState([]);
     const [books, setBooks] = useState([]);
-    const [usersData, setUsersData] = useState([]);
+    //const [usersData, setUsersData] = useState([]);
     const [searched, setSearched] = useState();
     
 
@@ -48,17 +48,17 @@ const Borrows = () => {
                     'Accept': 'application/json'
                 }
                 }).then( (resUs) => { return resUs } ).catch( (err) => { console.log(err); } );
-            if (responseUsers)
-            {
                 const dataUsers = await responseUsers.json();
-                setUsersData(dataUsers);
+            if (dataUsers)
+            {
+                //setUsersData(dataUsers);
                 fetchBorrows();
             }
         };
         fetchUsers();
 
 
-    }, []);
+    }, [token]);
     
 
     const borrowDel = async (brId) => {
@@ -77,7 +77,9 @@ const Borrows = () => {
                 //.then( (data) => { console.log(data); return data;} )
   
         const dataBorrowBook = await responseBorrowBook.json();
-        document.location.reload();
+        if(dataBorrowBook) {
+            document.location.reload();
+        }
       };
 
 
@@ -100,7 +102,7 @@ function retFullList() {
                 <h5 className='borrow-data'> Data wypożyczenia: {borrow.issueDate} </h5>
                 <h5 className='borrow-data'> Data oddania: {borrow.returnDate} </h5>
                 <h5 className='borrow-data'> Termin oddania: {borrow.dueDate} </h5>
-                <form className='borrow-data' onSubmit={e => (e.preventDefault(), borrowDel(borrow.borrowId))}> 
+                <form className='borrow-data' onSubmit={e => {e.preventDefault(); borrowDel(borrow.borrowId) } }>
                   <button className='borrow-button' type='submit'>Oddaj</button>
                 </form>
             </div>
@@ -131,7 +133,7 @@ function retFullList() {
                 <h5 className='borrow-data'> Data wypożyczenia: {borrow.issueDate} </h5>
                 <h5 className='borrow-data'> Data oddania: {borrow.returnDate} </h5>
                 <h5 className='borrow-data'> Termin oddania: {borrow.dueDate} </h5>
-                <form className='borrow-data' onSubmit={e => (e.preventDefault(), borrowDel(borrow.borrowId))}> 
+                <form className='borrow-data' onSubmit={e => {e.preventDefault(); borrowDel(borrow.borrowId) } }>
                   <button className='borrow-button' type='submit'>Oddaj</button>
                 </form>
             </div>
@@ -155,7 +157,7 @@ function retFullList() {
           </form>
     
           <h1 className="book-list-title">Lista książek</h1>
-            <div id="book-list">
+            <div id="borrows-list">
               {retFullList()}
             </div>
 
@@ -170,7 +172,7 @@ function retFullList() {
           </form>
     
           <h1 className="book-list-title">Lista książek</h1>
-            <div id="book-list">
+            <div id="borrows-list">
               {retNFullList()}
             </div>
 

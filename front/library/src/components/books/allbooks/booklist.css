@@ -4,7 +4,14 @@
     color: #77DDEE;
 }
 
+#book-list {
+  margin: 0 auto;
+  width: 90vmin;
+}
+
 .book-list-item {
+    display: inline-flex;
+    margin: 20vmin auto;
     width: 90vmin;
     height: 40vmin;
     margin: auto;
@@ -18,7 +25,7 @@
 
   .book-list-image {
     height: 40vmin;
-    margin: 0 auto;
+    margin: 0;
     border-radius: 15px 0 0 15px;
     display: inline-block;
     object-fit: fill;
@@ -30,7 +37,11 @@
     margin: 0 auto;
     padding-left: 2vmax;
     display: inline-block;
-    transform: translate(0, -8vmin);
+}
+
+.book-buttons {
+  display: grid;
+  align-content: space-evenly;
 }
 
 .book-options {
@@ -40,11 +51,12 @@
   padding: 0;
 }
 .borrow-form{
-  display: inline-flex;
+  display: block;
+  margin: 0 auto;
 }
 
 .borrow-button {
-  display: inline-flex;
+  display: flex;
 }
 
 .book-search-form {

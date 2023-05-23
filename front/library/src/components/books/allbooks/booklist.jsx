@@ -7,6 +7,8 @@ const BookList = () => {
   const [books, setBooks] = useState([]);
   const [searched, setSearched] = useState();
 
+
+
     function checkTitle(bkTitle, srchBkTitle) { 
       for(var wordTitle of bkTitle) {
           wordTitle = wordTitle.toLowerCase();
@@ -21,6 +23,9 @@ const BookList = () => {
       return 0;
     }
     
+
+
+
 
     const borrowBook = async (ev, bkId) => {
       ev.preventDefault();
@@ -53,9 +58,39 @@ const BookList = () => {
     }
 
 
+
+
+    const delBook = async (ev, bkId) => {
+      ev.preventDefault();
+      const resDelBook = await
+        fetch('http://localhost:8080/books/'+bkId, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            "Content-Type": "application/json",
+            'Accept': 'application/json'
+        }
+        }).then( (response) => { return response } ).catch( (err) => { console.log(err); } );
+      if(resDelBook){
+        document.location.reload();
+      }
+        
+    };
+
+    function delBookSubmit(bkId){
+      if(window.localStorage.getItem('userRole')==="ADMIN"){
+        return (
+          <form className='borrow-form' onSubmit={ event => delBook(event, bkId)}>
+            <button className='borrow-button' type="submit">Usuń</button>
+          </form>
+        );
+      } else { return(''); }
+    }
+
+
     function retFullList() {
       return (
-        <div>
+        <div id="book-list">
            {books.map( (book) => (
             <div className='book-list-item' id={book.book_id} key={book.book_id}>
                 <img src={book.imageUrl} alt={book.title} className="book-list-image" />
@@ -66,7 +101,10 @@ const BookList = () => {
                   <h5>Dział: {book.genre}</h5>
                   <p>Dostępna ilość: {book.noOfCopies}</p>
               </div>
+              <div className='book-buttons'>
                 {ifLoged(book.book_id)}
+                {delBookSubmit(book.book_id)}
+              </div>
             </div>
           )) }
         </div>
@@ -77,7 +115,7 @@ const BookList = () => {
 
     function retNFullList() {
       return (
-        <div>
+        <div id="book-list">
            {books.map( (book) => 
             {              
             if( checkTitle( (book.title).split(' '), searched.split(' ') ) ){ return (
@@ -90,7 +128,10 @@ const BookList = () => {
                     <h5>Dział: {book.genre}</h5>
                     <p>Dostępna ilość: {book.noOfCopies}</p>
                 </div>
+                <div className='book-buttons'>
                 {ifLoged(book.book_id)}
+                {delBookSubmit(book.book_id)}
+                </div>
               </div> );
             } else { return (''); };
             }
@@ -151,7 +192,19 @@ const BookList = () => {
           </label>
           <label className="addbook-label">
             <p>Gatunek</p>
-            <input type="text" className="addbook-input" onChange={e => setGenre(e.target.value)} />
+            <input list="genre" className="addbook-input" onChange={e => setGenre(e.target.value)}/>
+            <datalist id="genre" className="addbook-input" >
+                <option value="BIOGRAPHY" />
+                <option value="FANTASY" />
+                <option value="HISTORY" />
+                <option value="HORROR" />
+                <option value="NON_FICTION" />
+                <option value="ROMANCE" />
+                <option value="SCIENCE" />
+                <option value="SCIENCE_FICTION" />
+                <option value="THRILLER" />
+                <option value="OTHERS" />
+            </datalist>
           </label>
           <label className="addbook-label">
             <p>Adres zdjęcia okładki</p>
@@ -159,7 +212,7 @@ const BookList = () => {
           </label>
           <label className="addbook-label">
             <p>Ilość kopii</p>
-            <input type="text" className="addbook-input" onChange={e => setNoOfCopies(e.target.value)} />
+            <input type="number" className="addbook-input" onChange={e => setNoOfCopies(e.target.value)} />
           </label>
           <div className="login-submit">
             <button type="submit">Dodaj</button>
@@ -168,10 +221,6 @@ const BookList = () => {
         );
       } else { return(''); }
     }
-
-
-
-
 
 
 
@@ -188,6 +237,8 @@ const BookList = () => {
     
   }, []);
 
+
+
     function turn(){
       
       if(!searched){
@@ -200,9 +251,7 @@ const BookList = () => {
             </form>
       
             <h1 className="book-list-title">Lista książek</h1>
-              <div id="book-list">
                 {retFullList()}
-              </div>
   
           </div>
         );
@@ -216,9 +265,7 @@ const BookList = () => {
             </form>
       
             <h1 className="book-list-title">Lista książek</h1>
-              <div id="book-list">
                 {retNFullList()}
-              </div>
   
           </div>
         );

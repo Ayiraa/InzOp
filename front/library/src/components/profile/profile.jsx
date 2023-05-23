@@ -8,7 +8,10 @@ const Profile = () => {
     const [books, setBooks] = useState([]);
     const [userData, setUserData] = useState([]);
     
-
+    function adminButton(role){
+        if(role==="ADMIN"){ return(<button onClick={adminOptions}>Opcje Administratora</button>); }
+        else{ return(''); }
+    }
     function adminOptions() { document.location.reload(); }
 
     useEffect( () => {
@@ -57,9 +60,9 @@ const Profile = () => {
         };
         fetchUsers();
         
-    }, []);
+    }, [token]);
     
-
+    
 
   return (
 <div>
@@ -68,7 +71,7 @@ const Profile = () => {
         <h3> Imię i nazwisko: { userData.firstname } { userData.lastname } </h3>
         <h3> Adres e-mail: { userData.email } </h3>
         <h3> Rola: { userData.role } </h3>
-        <button onClick={adminOptions}>Opcje Administratora</button>
+        {adminButton(userData.role)}
     </div>
 
 <h1> Lista wypożeczonych książek: </h1>

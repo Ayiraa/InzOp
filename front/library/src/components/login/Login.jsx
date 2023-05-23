@@ -5,6 +5,7 @@ import './login.css';
 
 
 
+
 async function loginUser(credentials) {
   return fetch('http://localhost:8080/auth/login', {
     method: "POST",
@@ -25,13 +26,14 @@ export default function Login({ setToken }) {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const token = await loginUser({
-      email,
-      password
-    });
-    setToken(token);
-    window.localStorage.setItem('eml', email);
-    navigate("/profile");
+
+      const token = await loginUser({
+        email,
+        password
+      });
+      setToken(token);
+      window.localStorage.setItem('eml', email);
+      navigate("/profile");
   }
 
 
@@ -39,6 +41,7 @@ export default function Login({ setToken }) {
     <div className="login-wrapper">
       <h1>Please Log In</h1>
       <form onSubmit={handleSubmit}>
+        <p id="loginValidate" style={{color: 'red'}}></p>
         <label>
           <p>Adres email</p>
           <input type="email" onChange={e => setEmail(e.target.value)} />
