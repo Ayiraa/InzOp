@@ -1,10 +1,24 @@
-//import React from 'react';
-import { Link } from 'react-router-dom'; // Assuming you are using React Router for routing
+import React from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import './navbar.css'; // Importing external CSS file for styling
 
 
+  
+
+function logout() {
+
+  localStorage.clear();
+    const fetchLogout= async () => {
+      const responseLogout = await fetch('http://localhost:8080/auth/logout');
+      const dataLogout = await responseLogout;
+      console.log(dataLogout);
+  
+    };
+  fetchLogout();
+}
 
 const NavbarLogIn = () => {
+  const navigate = useNavigate();
 
   if(window.localStorage.getItem('userRole') === 'ADMIN'){
     return (
@@ -25,6 +39,9 @@ const NavbarLogIn = () => {
                 <li className="navbar-item">
                   <Link to="/usrs" className="navbar-link">Użytkownicy</Link>
                 </li>
+                <li className="navbar-item">
+                  <button onClick={() => {logout(); navigate('/login'); document.location.reload();}} className="navbar-link">Wyloguj</button>
+                </li>
             </ul>
         </nav>
     );
@@ -40,6 +57,9 @@ const NavbarLogIn = () => {
               </li>
               <li className="navbar-item">
                 <Link to="/profile" className="navbar-link">Profil</Link>
+              </li>
+              <li className="navbar-item">
+                  <button onClick={() => {logout(); navigate('/login'); document.location.reload();}} className="navbar-link">Wyloguj</button>
               </li>
           </ul>
       </nav>

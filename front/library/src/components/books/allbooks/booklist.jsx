@@ -43,8 +43,9 @@ const BookList = () => {
           })
           }).then( (response) => { return response } ).catch( (err) => { console.log(err); } );
 
-      const dataBorrowBook = await responseBorrowBook.json();
+      const dataBorrowBook = await responseBorrowBook;
       console.log(dataBorrowBook);
+      //document.location.reload();
     };
 
     function ifLoged(bkId){
