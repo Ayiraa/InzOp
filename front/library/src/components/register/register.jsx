@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './register.css';
 
 
+
 function valiPass(pass){
   var checked = 0;
 

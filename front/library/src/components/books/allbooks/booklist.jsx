@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import useToken from '../../../useToken';
 import './booklist.css';
 
+
 const BookList = () => {
   const { token } = useToken();
   const [books, setBooks] = useState([]);
   const [searched, setSearched] = useState();
-
-
 
     function checkTitle(bkTitle, srchBkTitle) { 
       for(var wordTitle of bkTitle) {

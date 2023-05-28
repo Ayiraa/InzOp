@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import './navbar.css'; // Importing external CSS file for styling
 
 
-  
 
 function logout() {
 

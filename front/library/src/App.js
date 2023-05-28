@@ -10,6 +10,7 @@ import Register from './components/register/register';
 import {NavbarLogIn, NavbarLogOut} from './components/utils/Navbar';
 import useToken from './useToken';
 
+
 function App() {
   const { token, setToken } = useToken();
   if(token) {
