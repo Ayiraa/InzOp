@@ -1,0 +1,57 @@
+.login-wrapper {
+    height: 50vmin;
+    width: 50vmin;
+    margin: 0 auto;
+    margin-top: 5vmin;
+    padding: 5%;
+    border: 0px solid #ccc;
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 1em #77DDEE;
+    color: #77DDEE;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+p {
+  margin: 0;
+  font-weight: bold;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.login-submit {
+   display: flex;
+}
+
+button {
+  background-color: #22CC66;
+  color: black;
+  border: none;
+  margin: 0 auto;
+  padding: 2vmin;
+  border-radius: 5px;
+  font-size: 2vmin;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #00FF55;
+}
