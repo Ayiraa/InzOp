@@ -8,14 +8,15 @@ const BookList = () => {
   const [books, setBooks] = useState([]);
   const [searched, setSearched] = useState();
 
-    function checkTitle(bkTitle, srchBkTitle) { 
+    function checkTitle(bkTitle, srchBkTitle, gnr) { 
       for(var wordTitle of bkTitle) {
           wordTitle = wordTitle.toLowerCase();
+          gnr = gnr.toLowerCase();
 
           for(var srchWordTitle of srchBkTitle) {
             srchWordTitle = srchWordTitle.toLowerCase();
               
-            if (wordTitle===srchWordTitle) { return 1; }
+            if (wordTitle===srchWordTitle || gnr===srchWordTitle) { return 1; }
             else {return 0;}
           }
         }
@@ -118,7 +119,7 @@ const BookList = () => {
         <div id="book-list">
            {books.map( (book) => 
             {              
-            if( checkTitle( (book.title).split(' '), searched.split(' ') ) ){ return (
+            if( checkTitle( (book.title).split(' '), searched.split(' '), book.genre ) ){ return (
               <div className='book-list-item' id={book.book_id} key={book.book_id}>
                 <img src={book.imageUrl} alt={book.title} className="book-list-image" />
                 <div className='book-list-caption'>
