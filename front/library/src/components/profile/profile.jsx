@@ -87,6 +87,7 @@ const Profile = () => {
                     )}"
                 </h4>
                 <h5 className='borrow-data'> Data wypożyczenia: {borrow.issueDate} </h5>
+                <h5 className='borrow-data'> Data oddania: {borrow.returnDate} </h5>
                 <h5 className='borrow-data'> Termin oddania: {borrow.dueDate} </h5>
 
             </div>
