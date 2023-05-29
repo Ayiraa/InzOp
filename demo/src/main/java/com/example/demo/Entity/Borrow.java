@@ -94,5 +94,4 @@ public class Borrow {
 
     public void setUser_email(String user_email) {
         this.user_email = user_email;
-    }
-}
+    }}
