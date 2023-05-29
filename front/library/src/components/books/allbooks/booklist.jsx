@@ -8,7 +8,8 @@ const BookList = () => {
   const [books, setBooks] = useState([]);
   const [searched, setSearched] = useState();
 
-    function checkTitle(bkTitle, srchBkTitle, gnr) { 
+    function checkTitle(bkTitle, srchBkTitle, gnr, athr) { 
+      var chckd = 0;
       for(var wordTitle of bkTitle) {
           wordTitle = wordTitle.toLowerCase();
           gnr = gnr.toLowerCase();
@@ -16,9 +17,15 @@ const BookList = () => {
           for(var srchWordTitle of srchBkTitle) {
             srchWordTitle = srchWordTitle.toLowerCase();
               
-            if (wordTitle===srchWordTitle || gnr===srchWordTitle) { return 1; }
-            else {return 0;}
+            if (wordTitle===srchWordTitle || gnr===srchWordTitle) { chckd=1 }
+            for(var partAuthor of athr){
+              partAuthor = partAuthor.toLowerCase();
+              if(partAuthor===srchWordTitle) { chckd=1 }
+            }
+            
           }
+          if(chckd===1){ return 1; } else { return 0; }
+          
         }
       return 0;
     }
@@ -119,7 +126,7 @@ const BookList = () => {
         <div id="book-list">
            {books.map( (book) => 
             {              
-            if( checkTitle( (book.title).split(' '), searched.split(' '), book.genre ) ){ return (
+            if( checkTitle( (book.title).split(' '), searched.split(' '), book.genre, (book.author).split(' ')) ){ return (
               <div className='book-list-item' id={book.book_id} key={book.book_id}>
                 <img src={book.imageUrl} alt={book.title} className="book-list-image" />
                 <div className='book-list-caption'>
