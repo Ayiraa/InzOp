@@ -31,30 +31,23 @@ const Usrs = () => {
         fetchUsers();
 
 
-    }, []);
-    
+    }, [token]);
+
 
     const userDel = async (usrId) => {
-        await console.log(usrId);
-        console.log(window.localStorage.getItem('userId'));
-        console.log(token);
         const responseBorrowBook = await
-            fetch('http://localhost:8080/users/', {
+            fetch('http://localhost:8080/users/'+usrId, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 "Content-Type": "application/json",
                 'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                "user_id": usrId
-            })
+            }
             }).then( (response) => { return response } ).catch( (err) => { console.log(err); } );
                 //.then( (data) => { console.log(data); return data;} )
-  
-        const dataBorrowBook = await responseBorrowBook.json();
-        console.log(dataBorrowBook);
-        document.location.reload();
+        if(responseBorrowBook){
+          document.location.reload();
+        }
       };
 
 
@@ -75,14 +68,15 @@ const Usrs = () => {
                 //.then( (data) => { console.log(data); return data;} )
   
         const dataBorrowBook = await responseBorrowBook.json();
+        console.log(dataBorrowBook);
         document.location.reload();
       };
 
-
+      
       function chckRole(rl, usId) {
         if(rl==="USER"){
             return (
-                <form className='borrow-data' onSubmit={e => (e.preventDefault(), roleChng(usId))}> 
+                <form className='borrow-data' onSubmit={e => {e.preventDefault(); roleChng(usId) } }>
                 <button className='borrow-button' type='submit'>Zmień rolę</button>
                 </form>
             );
@@ -98,8 +92,8 @@ function retFullList() {
                 <h5 className='borrow-data'> Dane użytkownika: {user.firstname} {user.lastname} </h5>
                 <h5 className='borrow-data'> Adres e-mail: {user.email} </h5>
                 <h5 className='borrow-data'> Rola użytkownika: {user.role} </h5>
-                {chckRole(user.role, user.user_id)}
-                <form className='borrow-data' onSubmit={e => (e.preventDefault(), userDel(user.user_id))}> 
+                {/*{chckRole(user.role, user.user_id)}*/}
+                <form className='borrow-data' onSubmit={e => {e.preventDefault(); userDel(user.user_id) } }>
                   <button className='borrow-button' type='submit'>Usuń</button>
                 </form>
             </div>
@@ -121,8 +115,8 @@ function retFullList() {
                     <h5 className='borrow-data'> Dane użytkownika: {user.firstname} {user.lastname} </h5>
                     <h5 className='borrow-data'> Adres e-mail: {user.email} </h5>
                     <h5 className='borrow-data'> Rola użytkownika: {user.role} </h5>
-                    {chckRole(user.role, user.user_id)}
-                    <form className='borrow-data' onSubmit={e => (e.preventDefault(), userDel(user.user_id))}> 
+                    {/*{chckRole(user.role, user.user_id)}*/}
+                    <form className='borrow-data' onSubmit={e => {e.preventDefault(); userDel(user.user_id) } }>
                     <button className='borrow-button' type='submit'>Usuń</button>
                     </form>
                 </div>
@@ -142,11 +136,11 @@ function retFullList() {
         <div id="book-list-container">
     
           <form className="book-search-form">
-            <input type="text" className="book-search-text" onChange={e => setSearched(e.target.value) }></input>
+            <input type="text" className="book-search-text" placeholder="Wpisz email użytkownika" onChange={e => setSearched(e.target.value) }></input>
           </form>
     
           <h1 className="book-list-title">Lista użytkowników</h1>
-            <div id="book-list">
+            <div id="usrs-list">
               {retFullList()}
             </div>
 
@@ -161,7 +155,7 @@ function retFullList() {
           </form>
     
           <h1 className="book-list-title">Lista książek</h1>
-            <div id="book-list">
+            <div id="usrs-list">
               {retNFullList()}
             </div>
 

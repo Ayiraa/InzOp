@@ -8,7 +8,7 @@ const Borrows = () => {
     const { token } = useToken();
     const [borrows, setBorrows] = useState([]);
     const [books, setBooks] = useState([]);
-    const [usersData, setUsersData] = useState([]);
+    //const [usersData, setUsersData] = useState([]);
     const [searched, setSearched] = useState();
     
 
@@ -48,17 +48,17 @@ const Borrows = () => {
                     'Accept': 'application/json'
                 }
                 }).then( (resUs) => { return resUs } ).catch( (err) => { console.log(err); } );
-            if (responseUsers)
-            {
                 const dataUsers = await responseUsers.json();
-                setUsersData(dataUsers);
+            if (dataUsers)
+            {
+                //setUsersData(dataUsers);
                 fetchBorrows();
             }
         };
         fetchUsers();
 
 
-    }, []);
+    }, [token]);
     
 
     const borrowDel = async (brId) => {
@@ -77,9 +77,10 @@ const Borrows = () => {
                 //.then( (data) => { console.log(data); return data;} )
   
         const dataBorrowBook = await responseBorrowBook.json();
-        document.location.reload();
+        if(dataBorrowBook) {
+            document.location.reload();
+        }
       };
-
 
 
 
@@ -96,11 +97,11 @@ function retFullList() {
                         }
                     )}"
                 </h4>
-                <h5 className='borrow-data'> Id użytkownika: {borrow.userId} </h5>
+                <h5 className='borrow-data'> Email użytkownika: {borrow.user_email} </h5>
                 <h5 className='borrow-data'> Data wypożyczenia: {borrow.issueDate} </h5>
                 <h5 className='borrow-data'> Data oddania: {borrow.returnDate} </h5>
                 <h5 className='borrow-data'> Termin oddania: {borrow.dueDate} </h5>
-                <form className='borrow-data' onSubmit={e => (e.preventDefault(), borrowDel(borrow.borrowId))}> 
+                <form className='borrow-data' onSubmit={e => {e.preventDefault(); borrowDel(borrow.borrowId) } }>
                   <button className='borrow-button' type='submit'>Oddaj</button>
                 </form>
             </div>
@@ -117,7 +118,7 @@ function retFullList() {
          {Object.values(borrows).map( (borrow) => 
           {         
             
-          if( parseInt(searched) === (borrow.borrowId) ){ return (
+          if( parseInt(searched) === (borrow.borrowId) || searched === borrow.user_email ){ return (
             <div className='borrows' key={borrow.borrowId} id={borrow.borrowId} >
                 <h4 className='borrow-data'> Tytuł książki: "
                     {books.map( (book) =>
@@ -127,11 +128,11 @@ function retFullList() {
                         }
                     )}"
                 </h4>
-                <h5 className='borrow-data'> Id użytkownika: {borrow.userId} </h5>
+                <h5 className='borrow-data'> Email użytkownika: {borrow.user_email} </h5>
                 <h5 className='borrow-data'> Data wypożyczenia: {borrow.issueDate} </h5>
                 <h5 className='borrow-data'> Data oddania: {borrow.returnDate} </h5>
                 <h5 className='borrow-data'> Termin oddania: {borrow.dueDate} </h5>
-                <form className='borrow-data' onSubmit={e => (e.preventDefault(), borrowDel(borrow.borrowId))}> 
+                <form className='borrow-data' onSubmit={e => {e.preventDefault(); borrowDel(borrow.borrowId) } }>
                   <button className='borrow-button' type='submit'>Oddaj</button>
                 </form>
             </div>
@@ -151,11 +152,11 @@ function retFullList() {
         <div id="book-list-container">
     
           <form className="book-search-form">
-            <input type="text" className="book-search-text" onChange={e => setSearched(e.target.value) }></input>
+            <input type="text" className="book-search-text" placeholder="Wpisz email użytkownika" onChange={e => setSearched(e.target.value) }></input>
           </form>
     
           <h1 className="book-list-title">Lista książek</h1>
-            <div id="book-list">
+            <div id="borrows-list">
               {retFullList()}
             </div>
 
@@ -166,11 +167,11 @@ function retFullList() {
         <div className="book-list-container">
     
           <form className="book-search-form">
-            <input type="text" className="book-search-text" onChange={e => setSearched(e.target.value) }></input>
+            <input type="text" className="book-search-text" placeholder="Wpisz email użytkownika" onChange={e => setSearched(e.target.value) }></input>
           </form>
     
           <h1 className="book-list-title">Lista książek</h1>
-            <div id="book-list">
+            <div id="borrows-list">
               {retNFullList()}
             </div>
 

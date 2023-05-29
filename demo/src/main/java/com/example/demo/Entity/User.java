@@ -42,6 +42,7 @@ public class User implements UserDetails {
     @NotNull
     @NotBlank
     @Email
+    @Column(unique = true)
     String email;
 
     @NotNull
