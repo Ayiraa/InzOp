@@ -6,9 +6,9 @@ public enum BookCategory {
     HISTORY("History"),
     HORROR("Horror"),
     NON_FICTION("Non Fiction"),
+    SCIENCE_FICTION("Science fistion"),
     ROMANCE("Romance"),
     SCIENCE("Science"),
-    SCIENCE_FICTION("Science Fiction"),
     THRILLER("Thriller"),
     OTHERS("Others");
 
